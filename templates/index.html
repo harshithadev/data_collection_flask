@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Form to Firebase</title>
+  </head>
+  <body>
+    <h1>Form to Firebase</h1>
+
+    <form method="POST" action="/submit">
+      <label for="name">Name*</label>
+      <input type="text" name="name" required /><br />
+
+      <label for="contact_number">Contact Number*</label>
+      <input type="text" name="contact_number" required /><br />
+
+      <label for="email">Email</label>
+      <input type="text" name="email" /><br />
+
+      <label>Tags</label>
+      <input type="checkbox" name="tags" value="Tag 1" /> Tag 1
+      <input type="checkbox" name="tags" value="Tag 2" /> Tag 2
+      <input type="checkbox" name="tags" value="Tag 3" /> Tag 3<br />
+
+      <label for="comments">Comments</label>
+      <textarea name="comments"></textarea><br />
+
+      <input type="submit" value="Submit" />
+    </form>
+
+    <p>* Mandatory fields</p>
+
+    <div>
+      {% with messages = get_flashed_messages() %} {% if messages %}
+      <ul>
+        {% for message in messages %}
+        <li>{{ message }}</li>
+        {% endfor %}
+      </ul>
+      {% endif %} {% endwith %}
+    </div>
+  </body>
+</html>
