@@ -1,58 +1,64 @@
-from flask import Flask, render_template, request, redirect, url_for, flash
+from flask import Flask, render_template, request, redirect, url_for
 import pyrebase
 
-# Initialize the Flask app
 app = Flask(__name__)
-app.secret_key = 'your_secret_key_here'
 
-# Firebase configuration
-config = {
-    "apiKey": "AIzaSyABvlgpz7TBuvA3HQQUJS4wY4tTRtiLOco",
-    "authDomain": "data-collection-509ec.firebaseapp.com",
-    "databaseURL": "YOUR_DATABASE_URL",
-    "storageBucket": "data-collection-509ec.appspot.com"
+firebaseConfig = {
+  "apiKey": "AIzaSyBwxFg6_v5cgq-s5PVDuF0KDQ89TgfBldc",
+  "authDomain": "data-collection-a96d1.firebaseapp.com",
+  "databaseURL": "https://data-collection-a96d1-default-rtdb.firebaseio.com",
+  "projectId": "data-collection-a96d1",
+  "storageBucket": "data-collection-a96d1.appspot.com",
+  "messagingSenderId": "199940641896",
+  "appId": "1:199940641896:web:c0bdc4a5fd8a987ee157dd",
+  "measurementId": "G-4Q73Z756E8"
 }
-config = {
-  "apiKey": "AIzaSyABvlgpz7TBuvA3HQQUJS4wY4tTRtiLOco",
-  "authDomain": "data-collection-509ec.firebaseapp.com",
-  #"databaseURL": "https://data-collection-509ec-default-rtdb.asia-southeast1.firebasedatabase.app/",
-  "projectId": "data-collection-509ec",
-  "storageBucket": "data-collection-509ec.appspot.com",
-  "messagingSenderId": "117519028614",
-  "appId": "1:117519028614:web:7af8e4cc44677b66159c07",
-  "measurementId": "G-M7Y1TKWJP1"
-};
-
-firebase = pyrebase.initialize_app(config)
+firebase = pyrebase.initialize_app(firebaseConfig)
 db = firebase.database()
 
-# Routes
-@app.route('/')
+
+
+# Define form fields and their labels
+form_fields = {
+    'name': 'Name',
+    'phone_number': 'Phone Number',
+    'email': 'Email',
+    'tag': 'Tag',
+    'comments': 'Comments'
+}
+# Define tag options
+tag_options = ['Client', 'EduProgram', 'Investor']
+
+@app.route('/', methods=['GET', 'POST'])
 def index():
-    return render_template('index.html')
-
-@app.route('/submit', methods=['POST'])
-def submit():
-    name = request.form['name']
-    contact_number = request.form['contact_number']
-    email = request.form['email']
-    tags = request.form.getlist('tags')
-    comments = request.form['comments']
-
-    if not name or not contact_number:
-        flash('Name and Contact Number are mandatory fields.')
-    else:
-        data = {
-            'name': name,
-            'contact_number': contact_number,
-            'email': email,
-            'tags': tags,
-            'comments': comments
-        }
-        db.child('entries').push(data)
-        flash('Data added successfully!')
-
-    return redirect(url_for('index'))
+    if request.method == 'POST':
+        data = {}   
+        for field, label in form_fields.items():
+            data[field] = request.form[field]
+        # db.child("uberstall").push({"name":"Harshithaaa", "number":9907512656})
+        db.child("uberstall").push(data)
+        return redirect(url_for('index'))
+    return render_template('index.html', form_fields=form_fields, tag_options=tag_options)
 
 if __name__ == '__main__':
     app.run(debug=True)
+
+data_ref = "your_data_node"  # Replace 'your_data_node' with the actual node name
+
+# Get the data at the specified reference
+snapshot = db.child(data_ref).get()
+
+if snapshot.val() is not None:
+    num_children = len(snapshot.each())
+    print(f'Number of children: {num_children}')
+else:
+    print('No data found at the specified reference')
+
+
+
+
+# @app.route("/")
+# def home():
+#   result = firebase.get('/uberStall', None)
+#   print(result)
+#   return str(result)
