@@ -40,19 +40,6 @@ def index():
         return redirect(url_for('index'))
     return render_template('index.html', form_fields=form_fields, tag_options=tag_options)
 
-if __name__ == '__main__':
-    app.run(debug=True)
-
-data_ref = "your_data_node"  # Replace 'your_data_node' with the actual node name
-
-# Get the data at the specified reference
-snapshot = db.child(data_ref).get()
-
-if snapshot.val() is not None:
-    num_children = len(snapshot.each())
-    print(f'Number of children: {num_children}')
-else:
-    print('No data found at the specified reference')
 
 
 
