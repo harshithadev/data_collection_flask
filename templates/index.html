@@ -1,24 +1,32 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Simple Firebase Form</title>
+    <title>Mechonyx Database</title>
+    <link rel="stylesheet" type="text/css" href="../static/styles.css">
 </head>
 <body>
-    <h1>Enter Data</h1>
+    
     <form method="post">
-        {% for field, label in form_fields.items() %}
-            <label for="{{ field }}">{{ label }}:</label>
-            {% if field == 'tag' %}
-                <select name="{{ field }}">
-                    {% for option in tag_options %}
-                        <option value="{{ option }}">{{ option }}</option>
-                    {% endfor %}
-                </select>
-            {% else %}
-                <input type="text" name="{{ field }}" required><br>
-            {% endif %}
-        {% endfor %}
+        <h1>Enter Data</h1>
+        <label for="name">Name:</label>
+        <input type="text" name="name" required><br>
+
+        <label for="phone_number">Phone Number:</label>
+        <input type="text" name="phone_number" required><br>
+
+        <label for="email">Email:</label>
+        <input type="text" name="email"><br>
+
+        <label for="tags">Tag:</label>
+        <label><input type="checkbox" name="tags" value="Client"> Client</label>
+        <label><input type="checkbox" name="tags" value="Education Program"> Education Program</label>
+        <label><input type="checkbox" name="tags" value="Investor"> Investor</label><br>
+
+        <label for="comments">Comments:</label>
+        <input type="text" name="comments"><br>
+
         <input type="submit" value="Submit">
     </form>
+
 </body>
 </html>
