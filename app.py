@@ -1,17 +1,19 @@
 from flask import Flask, render_template, request, redirect, url_for
 import pyrebase
+# https://github.com/nhorvath/Pyrebase4
 
 app = Flask(__name__)
 
 firebaseConfig = {
-  "apiKey": "AIzaSyBwxFg6_v5cgq-s5PVDuF0KDQ89TgfBldc",
-  "authDomain": "data-collection-a96d1.firebaseapp.com",
-  "databaseURL": "https://data-collection-a96d1-default-rtdb.firebaseio.com",
-  "projectId": "data-collection-a96d1",
-  "storageBucket": "data-collection-a96d1.appspot.com",
-  "messagingSenderId": "199940641896",
-  "appId": "1:199940641896:web:c0bdc4a5fd8a987ee157dd",
-  "measurementId": "G-4Q73Z756E8"
+    "apiKey": "AIzaSyBlXeJxZpM96mg2ibwvztBUeQyeoRGPMEs",
+    "authDomain": "hackathon-collection.firebaseapp.com",
+    "projectId": "hackathon-collection",
+    "storageBucket": "hackathon-collection.appspot.com",
+    "messagingSenderId": "1065068015646",
+    "appId": "1:1065068015646:web:8bb61edb4e21735ed3fe0f",
+    "measurementId": "G-L1G3FNJ48S",
+
+    "databaseURL": "https://hackathon-collection-default-rtdb.firebaseio.com/"
 }
 firebase = pyrebase.initialize_app(firebaseConfig)
 db = firebase.database()
